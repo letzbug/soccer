@@ -25,7 +25,7 @@ export default function RootLayout({
 
         {children}
 
-        <footer className="mt-16 pb-10">
+        <footer className="mt-4 pb-16">
           <div className="flex justify-center">
             <img
               src="/frankg-logo.png"
