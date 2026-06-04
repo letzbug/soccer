@@ -1,0 +1,3 @@
+import type { Config } from 'tailwindcss'
+const config: Config = { darkMode: ['class'], content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './lib/**/*.{ts,tsx}'], theme: { extend: { colors: { pitch: '#06140f', emeraldx: '#00ff8a', goldx: '#f8d36b', ink: '#08110d' }, boxShadow: { glow: '0 0 40px rgba(0,255,138,.18)', gold: '0 0 35px rgba(248,211,107,.18)' }, backgroundImage: { 'stadium-radial': 'radial-gradient(circle at 50% 0%, rgba(0,255,138,.22), transparent 35%), radial-gradient(circle at 85% 20%, rgba(248,211,107,.18), transparent 25%)' } } }, plugins: [require('tailwindcss-animate')] }
+export default config

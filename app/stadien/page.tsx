@@ -1,0 +1,2 @@
+import { stadiums } from '@/data/stadiums'; import { StadiumCard } from '@/components/stadiums/stadium-card';
+export default function Stadien(){return <main className="mx-auto max-w-7xl px-4 py-8"><h1 className="gold-text text-4xl font-black">WM-Stadien</h1><p className="mt-2 text-white/60">Klicke auf ein Stadion, um Details, Foto, Kapazität und Facts zu öffnen.</p><div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">{stadiums.map(s=><StadiumCard key={s.id} stadium={s}/>)}</div></main>}

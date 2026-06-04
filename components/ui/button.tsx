@@ -1,0 +1,2 @@
+import * as React from 'react'; import { cn } from '@/lib/utils'
+export function Button({className,variant='primary',...props}:React.ButtonHTMLAttributes<HTMLButtonElement>&{variant?:'primary'|'ghost'|'danger'}){return <button className={cn(variant==='primary'&&'btn-primary',variant==='ghost'&&'btn-ghost',variant==='danger'&&'rounded-2xl bg-red-500 px-5 py-3 font-bold text-white',className)} {...props}/>}
