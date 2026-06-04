@@ -33,9 +33,9 @@ export default function Home() {
         </div>
 
         <div className="mt-10 grid gap-3 sm:grid-cols-3">
-          <Feature icon={<Trophy />} title="104 Spiele" />
-          <Feature icon={<Activity />} title="Live Scores" />
-          <Feature icon={<Newspaper />} title="Latest News" />
+          <Feature icon={<Trophy />} title="104 Spiele" href="/spielplan" />
+          <Feature icon={<Activity />} title="Live Scores" href="/live" />
+          <Feature icon={<Newspaper />} title="Latest News" href="/news" />
         </div>
       </section>
 
@@ -77,17 +77,22 @@ export default function Home() {
 
 function Feature({
   icon,
-  title
+  title,
+  href
 }: {
   icon: React.ReactNode;
   title: string;
+  href: string;
 }) {
   return (
-    <div className="glass rounded-2xl p-4 text-center text-sm font-bold text-white/80">
+    <Link
+      href={href}
+      className="glass rounded-2xl p-4 text-center text-sm font-bold text-white/80 transition hover:scale-[1.03] hover:bg-white/10"
+    >
       <div className="mx-auto mb-2 w-fit text-goldx">
         {icon}
       </div>
       {title}
-    </div>
+    </Link>
   );
 }
