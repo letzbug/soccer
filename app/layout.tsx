@@ -22,9 +22,20 @@ export default function RootLayout({
   return (
     <html lang="de" className="dark">
       <body className="min-h-screen bg-stadium-radial pitch-lines">
-        <Nav />
-        {children}
-      </body>
-    </html>
-  );
-}
+  <Nav />
+
+  {children}
+
+  <footer className="mt-12 pb-8">
+    <div className="flex flex-col items-center justify-center opacity-70">
+      <img
+        src="/frankg-logo.png"
+        alt="Frank G"
+        className="h-10 w-auto"
+      />
+      <span className="mt-2 text-xs text-white/40">
+        Created by Frank G
+      </span>
+    </div>
+  </footer>
+</body>
