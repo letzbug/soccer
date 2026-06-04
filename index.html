@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#06101f" />
+  <title>World Soccer 2026 Tip Game</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <button class="icon-btn" id="menuBtn" aria-label="Menu">☰</button>
+      <div class="brand"><span class="cup">🏆</span><span>WORLD SOCCER<br><b>2026</b></span></div>
+      <button class="avatar" id="profileBtn" aria-label="Profil">FG</button>
+    </header>
+
+    <main id="app"></main>
+
+    <nav class="bottom-nav">
+      <button data-view="home" class="active">⌂<span>Home</span></button>
+      <button data-view="games">⚽<span>Spiele</span></button>
+      <button data-view="map">🌎<span>Map</span></button>
+      <button data-view="ranking">🏅<span>Ranking</span></button>
+      <button data-view="profile">☻<span>Profil</span></button>
+    </nav>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="data/app-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
