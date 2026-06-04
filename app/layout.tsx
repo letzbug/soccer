@@ -25,14 +25,12 @@ export default function RootLayout({
 
         {children}
 
-        <div className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 opacity-80">
-          <img
-            src="/frankg-logo.png"
-            alt="Frank G"
-            className="h-12 w-auto rounded-xl border border-white/10 bg-black/50 p-2 shadow-glow"
-          />
-        </div>
-      </body>
-    </html>
-  );
-}
+        <footer className="mt-16 pb-10">
+  <div className="flex justify-center">
+    <img
+      src="/frankg-logo.png"
+      alt="Frank G"
+      className="h-12 w-auto rounded-xl border border-white/10 bg-black/50 p-2 opacity-80 shadow-glow"
+    />
+  </div>
+</footer>
