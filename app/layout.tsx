@@ -26,11 +26,15 @@ export default function RootLayout({
         {children}
 
         <footer className="mt-16 pb-10">
-  <div className="flex justify-center">
-    <img
-      src="/frankg-logo.png"
-      alt="Frank G"
-      className="h-12 w-auto rounded-xl border border-white/10 bg-black/50 p-2 opacity-80 shadow-glow"
-    />
-  </div>
-</footer>
+          <div className="flex justify-center">
+            <img
+              src="/frankg-logo.png"
+              alt="Frank G"
+              className="h-12 w-auto rounded-xl border border-white/10 bg-black/50 p-2 opacity-80 shadow-glow"
+            />
+          </div>
+        </footer>
+      </body>
+    </html>
+  );
+}
