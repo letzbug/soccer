@@ -6,7 +6,6 @@ export const metadata: Metadata = {
   title: 'GlobeTip 2026',
   description: 'Premium WM 2026 Tipp-Spiel',
   manifest: '/manifest.json',
-
   icons: {
     icon: '/favicon.ico',
     apple: '/apple-touch-icon.png',
@@ -22,20 +21,18 @@ export default function RootLayout({
   return (
     <html lang="de" className="dark">
       <body className="min-h-screen bg-stadium-radial pitch-lines">
-  <Nav />
+        <Nav />
 
-  {children}
+        {children}
 
-  <footer className="mt-12 pb-8">
-    <div className="flex flex-col items-center justify-center opacity-70">
-      <img
-        src="/frankg-logo.png"
-        alt="Frank G"
-        className="h-10 w-auto"
-      />
-      <span className="mt-2 text-xs text-white/40">
-        Created by Frank G
-      </span>
-    </div>
-  </footer>
-</body>
+        <div className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 opacity-80">
+          <img
+            src="/frankg-logo.png"
+            alt="Frank G"
+            className="h-12 w-auto rounded-xl border border-white/10 bg-black/50 p-2 shadow-glow"
+          />
+        </div>
+      </body>
+    </html>
+  );
+}
