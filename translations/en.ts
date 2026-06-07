@@ -154,5 +154,9 @@ stadiumModal: {
   loadError: 'Matches could not be loaded.',
   saveError: 'Result could not be saved.',
   success: 'Result saved and points calculated.'
+},
+  stadiumCard: {
+  seats: 'seats',
+  opened: 'Opened'
 }
 };
