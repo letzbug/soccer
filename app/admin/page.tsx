@@ -21,10 +21,16 @@ export default function AdminPage() {
   async function loadMatches() {
     const supabase = createClient();
 
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('matches')
       .select('id, home_team, away_team, home_score, away_score, status')
       .order('match_date');
+
+    if (error) {
+      setMessage('Spiele konnten nicht geladen werden.');
+      console.error(error);
+      return;
+    }
 
     if (data) {
       setMatches(data);
@@ -33,8 +39,8 @@ export default function AdminPage() {
 
       data.forEach((m) => {
         initial[m.id] = {
-          home: m.home_score?.toString() ?? '',
-          away: m.away_score?.toString() ?? ''
+          home: m.home_score !== null ? String(m.home_score) : '',
+          away: m.away_score !== null ? String(m.away_score) : ''
         };
       });
 
@@ -46,8 +52,18 @@ export default function AdminPage() {
     const supabase = createClient();
     const score = scores[matchId];
 
-    const home = Number(score.home);
-    const away = Number(score.away);
+    if (!score || score.home === '' || score.away === '') {
+      setMessage('Bitte beide Ergebnisse eingeben.');
+      return;
+    }
+
+    const home = parseInt(score.home, 10);
+    const away = parseInt(score.away, 10);
+
+    if (Number.isNaN(home) || Number.isNaN(away)) {
+      setMessage('Bitte gültige Zahlen eingeben.');
+      return;
+    }
 
     const { error } = await supabase
       .from('matches')
@@ -60,15 +76,22 @@ export default function AdminPage() {
 
     if (error) {
       setMessage('Ergebnis konnte nicht gespeichert werden.');
+      console.error(error);
       return;
     }
 
-    await supabase.rpc('recalculate_match_points', {
+    const { error: rpcError } = await supabase.rpc('recalculate_match_points', {
       match_text_id: matchId
     });
 
+    if (rpcError) {
+      setMessage('Ergebnis gespeichert, aber Punkte konnten nicht berechnet werden.');
+      console.error(rpcError);
+      return;
+    }
+
     setMessage('Ergebnis gespeichert und Punkte berechnet.');
-    loadMatches();
+    await loadMatches();
   }
 
   useEffect(() => {
@@ -83,6 +106,12 @@ export default function AdminPage() {
         Ergebnisse eintragen und Punkte automatisch berechnen.
       </p>
 
+      {message && (
+        <div className="mt-6 rounded-2xl border border-emeraldx/30 bg-emeraldx/10 p-4 text-center text-emeraldx">
+          {message}
+        </div>
+      )}
+
       <div className="mt-8 grid gap-4">
         {matches.map((match) => (
           <div key={match.id} className="glass rounded-3xl p-5">
@@ -91,6 +120,7 @@ export default function AdminPage() {
                 <div className="text-xl font-black">
                   {match.home_team} vs {match.away_team}
                 </div>
+
                 <div className="text-sm text-white/50">
                   Status: {match.status}
                 </div>
@@ -106,8 +136,8 @@ export default function AdminPage() {
                     setScores((s) => ({
                       ...s,
                       [match.id]: {
-                        ...s[match.id],
-                        home: e.target.value
+                        home: e.target.value.replace(/\D/g, '').slice(0, 2),
+                        away: s[match.id]?.away ?? ''
                       }
                     }))
                   }
@@ -124,8 +154,8 @@ export default function AdminPage() {
                     setScores((s) => ({
                       ...s,
                       [match.id]: {
-                        ...s[match.id],
-                        away: e.target.value
+                        home: s[match.id]?.home ?? '',
+                        away: e.target.value.replace(/\D/g, '').slice(0, 2)
                       }
                     }))
                   }
@@ -139,12 +169,6 @@ export default function AdminPage() {
           </div>
         ))}
       </div>
-
-      {message && (
-        <div className="mt-6 text-center text-emerald-400">
-          {message}
-        </div>
-      )}
     </main>
   );
 }
