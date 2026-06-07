@@ -14,26 +14,41 @@ import {
   User
 } from 'lucide-react';
 import { createClient } from '@/lib/supabase-browser';
-
-const items = [
-  ['/dashboard', 'Dashboard', Trophy],
-  ['/spielplan', 'Spielplan', CalendarDays],
-  ['/stadien', 'Stadien', Landmark],
-  ['/meine-tipps', 'Meine Tipps', ClipboardList],
-  ['/profil', 'Profil', User],
-  ['/leaderboard', 'Ranking', BarChart3]
-] as const;
+import {
+  getStoredLanguage,
+  getTranslations,
+  setStoredLanguage,
+  type Language
+} from '@/lib/i18n';
 
 export function Nav() {
   const [email, setEmail] = useState<string | null>(null);
+  const [language, setLanguage] = useState<Language>('de');
+  const t = getTranslations(language);
+
+  const items = [
+    ['/dashboard', t.nav.dashboard, Trophy],
+    ['/spielplan', t.nav.schedule, CalendarDays],
+    ['/stadien', t.nav.stadiums, Landmark],
+    ['/meine-tipps', t.nav.myTips, ClipboardList],
+    ['/profil', t.nav.profile, User],
+    ['/leaderboard', t.nav.leaderboard, BarChart3]
+  ] as const;
 
   useEffect(() => {
+    setLanguage(getStoredLanguage());
+
     const supabase = createClient();
 
     supabase.auth.getUser().then(({ data }) => {
       setEmail(data.user?.email ?? null);
     });
   }, []);
+
+  function changeLanguage(nextLanguage: Language) {
+    setStoredLanguage(nextLanguage);
+    setLanguage(nextLanguage);
+  }
 
   async function logout() {
     const supabase = createClient();
@@ -72,13 +87,29 @@ export function Nav() {
             </Link>
           ))}
 
+          <div className="ml-1 flex items-center rounded-xl border border-white/10 bg-white/5 p-1">
+            {(['de', 'fr', 'en'] as Language[]).map((lang) => (
+              <button
+                key={lang}
+                onClick={() => changeLanguage(lang)}
+                className={`rounded-lg px-2 py-1 text-xs font-bold transition ${
+                  language === lang
+                    ? 'bg-goldx text-black'
+                    : 'text-white/60 hover:bg-white/10 hover:text-white'
+                }`}
+              >
+                {lang.toUpperCase()}
+              </button>
+            ))}
+          </div>
+
           {email ? (
             <button
               onClick={logout}
               className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm text-white/75 hover:bg-white/10 hover:text-white"
             >
               <LogOut size={16} />
-              <span className="hidden sm:inline">Logout</span>
+              <span className="hidden sm:inline">{t.nav.logout}</span>
             </button>
           ) : (
             <Link
@@ -86,7 +117,7 @@ export function Nav() {
               className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm text-white/75 hover:bg-white/10 hover:text-white"
             >
               <LogIn size={16} />
-              <span className="hidden sm:inline">Login</span>
+              <span className="hidden sm:inline">{t.nav.login}</span>
             </Link>
           )}
         </div>
