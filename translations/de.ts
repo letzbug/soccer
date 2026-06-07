@@ -156,5 +156,9 @@ stadiumModal: {
   loadError: 'Spiele konnten nicht geladen werden.',
   saveError: 'Ergebnis konnte nicht gespeichert werden.',
   success: 'Ergebnis gespeichert und Punkte berechnet.'
+},
+  stadiumCard: {
+  seats: 'Plätze',
+  opened: 'Baujahr'
 }
 };
