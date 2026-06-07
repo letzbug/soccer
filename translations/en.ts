@@ -104,5 +104,11 @@ export const en = {
   myTip: 'My Tip',
   points: 'Points',
   empty: 'You have not submitted any tips yet.'
+},
+  
+  schedulePage: {
+  title: 'Schedule',
+  searchPlaceholder: 'Search team, round, group...',
+  all: 'All'
 }
 };
