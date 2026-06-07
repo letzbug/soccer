@@ -143,5 +143,18 @@ stadiumModal: {
   stadiumsPage: {
   title: 'Stadien',
   description: 'Klicke auf ein Stadion, um Details, Foto, Kapazität und Facts zu öffnen.'
+},
+  adminPage: {
+  title: 'Admin',
+  description: 'Ergebnisse eintragen und Punkte automatisch berechnen.',
+  checking: 'Admin-Rechte werden geprüft...',
+  noAccess: 'Kein Zugriff',
+  noAccessText: 'Dieser Bereich ist nur für den Administrator freigegeben.',
+  status: 'Status',
+  save: 'Speichern',
+  enterBoth: 'Bitte beide Ergebnisse eingeben.',
+  loadError: 'Spiele konnten nicht geladen werden.',
+  saveError: 'Ergebnis konnte nicht gespeichert werden.',
+  success: 'Ergebnis gespeichert und Punkte berechnet.'
 }
 };
