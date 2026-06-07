@@ -86,5 +86,15 @@ export const fr = {
   perfectScore: 'Points pour un score exact',
   viewMyTips: 'Voir mes pronostics',
   openLeaderboard: 'Ouvrir le classement'
+},
+  
+  leaderboardPage: {
+  title: 'Classement',
+  loadError: 'Le classement n’a pas pu être chargé.',
+  rank: 'Rang',
+  player: 'Joueur',
+  points: 'Points',
+  tips: 'Pronostics',
+  empty: 'Aucun point pour le moment.'
 }
 };
