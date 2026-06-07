@@ -1,2 +1,66 @@
-'use client'; import { useMemo, useState } from 'react'; import { matches } from '@/data/matches'; import { MatchCard } from '@/components/matches/match-card';
-export default function Spielplan(){const [q,setQ]=useState(''); const [stage,setStage]=useState('Alle'); const stages=['Alle',...Array.from(new Set(matches.map(m=>m.stage)))]; const filtered=useMemo(()=>matches.filter(m=>(stage==='Alle'||m.stage===stage)&&`${m.home} ${m.away} ${m.stage}`.toLowerCase().includes(q.toLowerCase())),[q,stage]); return <main className="mx-auto max-w-7xl px-4 py-8"><h1 className="gold-text text-4xl font-black">Spielplan</h1><div className="my-6 flex flex-col gap-3 md:flex-row"><input className="input flex-1" placeholder="Suche Team, Runde, Gruppe..." value={q} onChange={e=>setQ(e.target.value)}/><select className="input" value={stage} onChange={e=>setStage(e.target.value)}>{stages.map(s=><option key={s}>{s}</option>)}</select></div><div className="grid gap-4 lg:grid-cols-2">{filtered.map(m=><MatchCard key={m.id} match={m}/>)}</div></main>}
+'use client';
+
+import { useEffect, useMemo, useState } from 'react';
+import { matches } from '@/data/matches';
+import { MatchCard } from '@/components/matches/match-card';
+import { useTipStore } from '@/store/tip-store';
+
+export default function Spielplan() {
+  const [q, setQ] = useState('');
+  const [stage, setStage] = useState('Alle');
+  const loadTips = useTipStore((s) => s.loadTips);
+
+  useEffect(() => {
+    loadTips();
+  }, [loadTips]);
+
+  const stages = [
+    'Alle',
+    ...Array.from(new Set(matches.map((m) => m.stage)))
+  ];
+
+  const filtered = useMemo(
+    () =>
+      matches.filter(
+        (m) =>
+          (stage === 'Alle' || m.stage === stage) &&
+          `${m.home} ${m.away} ${m.stage}`
+            .toLowerCase()
+            .includes(q.toLowerCase())
+      ),
+    [q, stage]
+  );
+
+  return (
+    <main className="mx-auto max-w-7xl px-4 py-8">
+      <h1 className="gold-text text-4xl font-black">
+        Spielplan
+      </h1>
+
+      <div className="my-6 flex flex-col gap-3 md:flex-row">
+        <input
+          className="input flex-1"
+          placeholder="Suche Team, Runde, Gruppe..."
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+        />
+
+        <select
+          className="input"
+          value={stage}
+          onChange={(e) => setStage(e.target.value)}
+        >
+          {stages.map((s) => (
+            <option key={s}>{s}</option>
+          ))}
+        </select>
+      </div>
+
+      <div className="grid gap-4 lg:grid-cols-2">
+        {filtered.map((m) => (
+          <MatchCard key={m.id} match={m} />
+        ))}
+      </div>
+    </main>
+  );
+}
