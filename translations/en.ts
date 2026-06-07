@@ -43,5 +43,22 @@ export const en = {
   registerLoading: 'Creating account...',
   confirmEmail: 'Account created. Please confirm your email.',
   passwordTooShort: 'Password must be at least 6 characters.'
+  },
+  
+  dashboardPage: {
+  title: 'Dashboard',
+  loginRequired: 'Please log in first.',
+  loginButton: 'Go to login',
+  myPoints: 'My Points',
+  globalRank: 'Global Rank',
+  myTips: 'My Tips',
+  openTips: 'Open Tips',
+  nextMatches: 'Next Matches',
+  topRanking: 'Top 5 Ranking',
+  rank: '#',
+  player: 'Player',
+  points: 'Points',
+  noPoints: 'No points yet.',
+  fullRanking: 'View full ranking'
 }
 };
