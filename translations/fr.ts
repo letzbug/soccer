@@ -129,11 +129,7 @@ tipModal: {
   saveError: 'Le pronostic n’a pas pu être enregistré.'
 },
   
-  stadiumsPage: {
-  title: 'Stades'
-},
-
-stadiumModal: {
+  stadiumModal: {
   fifaName: 'Nom FIFA',
   opened: 'Année d’ouverture',
   capacity: 'Capacité'
