@@ -3,6 +3,11 @@
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase-browser';
 import { Button } from '@/components/ui/button';
+import {
+  getStoredLanguage,
+  getTranslations,
+  type Language
+} from '@/lib/i18n';
 
 const ADMIN_EMAIL = 'letzbug@gmail.com';
 
@@ -16,11 +21,32 @@ type MatchRow = {
 };
 
 export default function AdminPage() {
+  const [language, setLanguage] = useState<Language>('de');
+  const t = getTranslations(language).adminPage;
+
   const [allowed, setAllowed] = useState(false);
   const [checking, setChecking] = useState(true);
   const [matches, setMatches] = useState<MatchRow[]>([]);
   const [scores, setScores] = useState<Record<string, { home: string; away: string }>>({});
   const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    setLanguage(getStoredLanguage());
+
+    function handleLanguageChange(event: Event) {
+      const customEvent = event as CustomEvent<Language>;
+      setLanguage(customEvent.detail);
+    }
+
+    window.addEventListener('globetip-language-change', handleLanguageChange);
+
+    return () => {
+      window.removeEventListener(
+        'globetip-language-change',
+        handleLanguageChange
+      );
+    };
+  }, []);
 
   async function checkAdmin() {
     const supabase = createClient();
@@ -42,7 +68,7 @@ export default function AdminPage() {
 
     setAllowed(true);
     setChecking(false);
-    loadMatches();
+    await loadMatches();
   }
 
   async function loadMatches() {
@@ -54,7 +80,7 @@ export default function AdminPage() {
       .order('match_date');
 
     if (error) {
-      setMessage('Spiele konnten nicht geladen werden.');
+      setMessage(t.loadError);
       return;
     }
 
@@ -79,7 +105,7 @@ export default function AdminPage() {
     const score = scores[matchId];
 
     if (!score || score.home === '' || score.away === '') {
-      setMessage('Bitte beide Ergebnisse eingeben.');
+      setMessage(t.enterBoth);
       return;
     }
 
@@ -96,7 +122,7 @@ export default function AdminPage() {
       .eq('id', matchId);
 
     if (error) {
-      setMessage('Ergebnis konnte nicht gespeichert werden.');
+      setMessage(t.saveError);
       return;
     }
 
@@ -104,19 +130,20 @@ export default function AdminPage() {
       match_text_id: matchId
     });
 
-    setMessage('Ergebnis gespeichert und Punkte berechnet.');
+    setMessage(t.success);
     await loadMatches();
   }
 
   useEffect(() => {
     checkAdmin();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (checking) {
     return (
       <main className="mx-auto max-w-5xl px-4 py-10">
         <div className="glass rounded-3xl p-6 text-center">
-          Admin-Rechte werden geprüft...
+          {t.checking}
         </div>
       </main>
     );
@@ -126,9 +153,12 @@ export default function AdminPage() {
     return (
       <main className="mx-auto max-w-5xl px-4 py-10">
         <div className="glass rounded-3xl p-6 text-center">
-          <h1 className="text-3xl font-black text-red-300">Kein Zugriff</h1>
+          <h1 className="text-3xl font-black text-red-300">
+            {t.noAccess}
+          </h1>
+
           <p className="mt-3 text-white/60">
-            Dieser Bereich ist nur für den Administrator freigegeben.
+            {t.noAccessText}
           </p>
         </div>
       </main>
@@ -137,10 +167,12 @@ export default function AdminPage() {
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-10">
-      <h1 className="gold-text text-4xl font-black">Admin</h1>
+      <h1 className="gold-text text-4xl font-black">
+        {t.title}
+      </h1>
 
       <p className="mt-3 text-white/60">
-        Ergebnisse eintragen und Punkte automatisch berechnen.
+        {t.description}
       </p>
 
       {message && (
@@ -159,7 +191,7 @@ export default function AdminPage() {
                 </div>
 
                 <div className="text-sm text-white/50">
-                  Status: {match.status}
+                  {t.status}: {match.status}
                 </div>
               </div>
 
@@ -199,7 +231,7 @@ export default function AdminPage() {
                 />
 
                 <Button onClick={() => saveResult(match.id)}>
-                  Speichern
+                  {t.save}
                 </Button>
               </div>
             </div>
