@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase-browser';
 import { Button } from '@/components/ui/button';
 
+const ADMIN_EMAIL = 'letzbug@gmail.com';
+
 type MatchRow = {
   id: string;
   home_team: string;
@@ -14,9 +16,34 @@ type MatchRow = {
 };
 
 export default function AdminPage() {
+  const [allowed, setAllowed] = useState(false);
+  const [checking, setChecking] = useState(true);
   const [matches, setMatches] = useState<MatchRow[]>([]);
   const [scores, setScores] = useState<Record<string, { home: string; away: string }>>({});
   const [message, setMessage] = useState('');
+
+  async function checkAdmin() {
+    const supabase = createClient();
+
+    const {
+      data: { user }
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      window.location.href = '/auth/login';
+      return;
+    }
+
+    if (user.email !== ADMIN_EMAIL) {
+      setAllowed(false);
+      setChecking(false);
+      return;
+    }
+
+    setAllowed(true);
+    setChecking(false);
+    loadMatches();
+  }
 
   async function loadMatches() {
     const supabase = createClient();
@@ -28,7 +55,6 @@ export default function AdminPage() {
 
     if (error) {
       setMessage('Spiele konnten nicht geladen werden.');
-      console.error(error);
       return;
     }
 
@@ -60,11 +86,6 @@ export default function AdminPage() {
     const home = parseInt(score.home, 10);
     const away = parseInt(score.away, 10);
 
-    if (Number.isNaN(home) || Number.isNaN(away)) {
-      setMessage('Bitte gültige Zahlen eingeben.');
-      return;
-    }
-
     const { error } = await supabase
       .from('matches')
       .update({
@@ -76,27 +97,43 @@ export default function AdminPage() {
 
     if (error) {
       setMessage('Ergebnis konnte nicht gespeichert werden.');
-      console.error(error);
       return;
     }
 
-    const { error: rpcError } = await supabase.rpc('recalculate_match_points', {
+    await supabase.rpc('recalculate_match_points', {
       match_text_id: matchId
     });
-
-    if (rpcError) {
-      setMessage('Ergebnis gespeichert, aber Punkte konnten nicht berechnet werden.');
-      console.error(rpcError);
-      return;
-    }
 
     setMessage('Ergebnis gespeichert und Punkte berechnet.');
     await loadMatches();
   }
 
   useEffect(() => {
-    loadMatches();
+    checkAdmin();
   }, []);
+
+  if (checking) {
+    return (
+      <main className="mx-auto max-w-5xl px-4 py-10">
+        <div className="glass rounded-3xl p-6 text-center">
+          Admin-Rechte werden geprüft...
+        </div>
+      </main>
+    );
+  }
+
+  if (!allowed) {
+    return (
+      <main className="mx-auto max-w-5xl px-4 py-10">
+        <div className="glass rounded-3xl p-6 text-center">
+          <h1 className="text-3xl font-black text-red-300">Kein Zugriff</h1>
+          <p className="mt-3 text-white/60">
+            Dieser Bereich ist nur für den Administrator freigegeben.
+          </p>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-10">
