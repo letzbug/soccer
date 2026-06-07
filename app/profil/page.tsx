@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase-server';
+import { ProfileUsernameForm } from './profile-username-form';
 
 type PredictionRow = {
   points: number;
@@ -35,6 +36,12 @@ export default async function ProfilPage() {
     );
   }
 
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('username')
+    .eq('id', user.id)
+    .single();
+
   const { data: predictions } = await supabase
     .from('predictions')
     .select('points')
@@ -56,6 +63,9 @@ export default async function ProfilPage() {
     ? new Date(user.created_at).toLocaleDateString('de-DE')
     : '-';
 
+  const currentUsername =
+    profile?.username ?? user.email?.split('@')[0] ?? 'Player';
+
   return (
     <main className="mx-auto max-w-5xl px-4 py-10">
       <h1 className="gold-text text-4xl font-black">Profil</h1>
@@ -71,6 +81,10 @@ export default async function ProfilPage() {
           </div>
 
           <div className="mt-4 text-2xl font-black text-white">
+            {currentUsername}
+          </div>
+
+          <div className="mt-2 text-sm text-white/50">
             {user.email}
           </div>
 
@@ -93,6 +107,8 @@ export default async function ProfilPage() {
           </div>
         </div>
       </div>
+
+      <ProfileUsernameForm initialUsername={profile?.username ?? ''} />
 
       <div className="mt-4 grid gap-4 sm:grid-cols-3">
         <div className="glass rounded-3xl p-6 text-center">
