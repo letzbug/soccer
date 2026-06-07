@@ -141,5 +141,18 @@ stadiumModal: {
   stadiumsPage: {
   title: 'Stadiums',
   description: 'Click a stadium to view details, photo, capacity and facts.'
+},
+  adminPage: {
+  title: 'Admin',
+  description: 'Enter results and automatically calculate points.',
+  checking: 'Checking admin rights...',
+  noAccess: 'No access',
+  noAccessText: 'This area is restricted to the administrator.',
+  status: 'Status',
+  save: 'Save',
+  enterBoth: 'Please enter both scores.',
+  loadError: 'Matches could not be loaded.',
+  saveError: 'Result could not be saved.',
+  success: 'Result saved and points calculated.'
 }
 };
