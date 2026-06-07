@@ -105,5 +105,11 @@ export const fr = {
   myTip: 'Mon pronostic',
   points: 'Points',
   empty: 'Vous n’avez pas encore envoyé de pronostic.'
+},
+  
+  schedulePage: {
+  title: 'Calendrier',
+  searchPlaceholder: 'Rechercher équipe, tour, groupe...',
+  all: 'Tous'
 }
 };
