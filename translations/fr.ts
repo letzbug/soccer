@@ -111,5 +111,21 @@ export const fr = {
   title: 'Calendrier',
   searchPlaceholder: 'Rechercher équipe, tour, groupe...',
   all: 'Tous'
+},
+  
+  matchCard: {
+  group: 'Groupe',
+  closed: 'Pronostic fermé',
+  tipClosed: 'Pronostic fermé',
+  tip: 'Pronostiquer',
+  stadium: 'Voir le stade'
+},
+
+tipModal: {
+  title: 'Votre pronostic',
+  cancel: 'Annuler',
+  save: 'Enregistrer',
+  loginRequired: 'Veuillez vous connecter d’abord.',
+  saveError: 'Le pronostic n’a pas pu être enregistré.'
 }
 };
