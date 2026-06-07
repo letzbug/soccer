@@ -95,5 +95,14 @@ export const en = {
   points: 'Points',
   tips: 'Tips',
   empty: 'No points yet.'
+},
+  
+  myTipsPage: {
+  title: 'My Tips',
+  loginRequired: 'Please log in first.',
+  match: 'Match',
+  myTip: 'My Tip',
+  points: 'Points',
+  empty: 'You have not submitted any tips yet.'
 }
 };
