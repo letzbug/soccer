@@ -1,18 +1,44 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase-browser';
 import { Button } from '@/components/ui/button';
+import {
+  getStoredLanguage,
+  getTranslations,
+  type Language
+} from '@/lib/i18n';
 
 export function ProfileUsernameForm({
   initialUsername
 }: {
   initialUsername: string;
 }) {
+  const [language, setLanguage] = useState<Language>('de');
+  const t = getTranslations(language).profilePage;
+
   const [username, setUsername] = useState(initialUsername);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    setLanguage(getStoredLanguage());
+
+    function handleLanguageChange(event: Event) {
+      const customEvent = event as CustomEvent<Language>;
+      setLanguage(customEvent.detail);
+    }
+
+    window.addEventListener('globetip-language-change', handleLanguageChange);
+
+    return () => {
+      window.removeEventListener(
+        'globetip-language-change',
+        handleLanguageChange
+      );
+    };
+  }, []);
 
   async function saveUsername() {
     setMessage('');
@@ -21,12 +47,12 @@ export function ProfileUsernameForm({
     const clean = username.trim();
 
     if (clean.length < 3) {
-      setError('Der Benutzername muss mindestens 3 Zeichen haben.');
+      setError(t.usernameTooShort);
       return;
     }
 
     if (clean.length > 24) {
-      setError('Der Benutzername darf maximal 24 Zeichen haben.');
+      setError(t.usernameTooLong);
       return;
     }
 
@@ -55,27 +81,30 @@ export function ProfileUsernameForm({
 
     if (error) {
       if (error.code === '23505') {
-        setError('Dieser Benutzername ist bereits vergeben.');
+        setError(t.usernameTaken);
         return;
       }
 
-      setError('Benutzername konnte nicht gespeichert werden.');
+      setError(t.usernameError);
       console.error(error);
       return;
     }
 
-    setMessage('Benutzername gespeichert.');
-    window.location.reload();
+    setMessage(t.usernameSaved);
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   }
 
   return (
     <div className="glass mt-4 rounded-3xl p-6">
       <div className="text-sm uppercase tracking-[0.25em] text-white/40">
-        Benutzername
+        {t.username}
       </div>
 
       <p className="mt-2 text-sm text-white/60">
-        Dieser Name erscheint im Ranking und auf deinem Profil.
+        {t.usernameDescription}
       </p>
 
       {message && (
@@ -94,12 +123,12 @@ export function ProfileUsernameForm({
         <input
           className="input flex-1"
           value={username}
-          placeholder="z. B. Frank G"
+          placeholder={t.usernamePlaceholder}
           onChange={(e) => setUsername(e.target.value)}
         />
 
         <Button onClick={saveUsername} disabled={saving}>
-          {saving ? 'Speichern...' : 'Speichern'}
+          {saving ? t.saving : t.save}
         </Button>
       </div>
     </div>
