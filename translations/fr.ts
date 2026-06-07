@@ -44,5 +44,22 @@ export const fr = {
   registerLoading: 'Création du compte...',
   confirmEmail: 'Compte créé. Veuillez confirmer votre e-mail.',
   passwordTooShort: 'Le mot de passe doit contenir au moins 6 caractères.'
+},
+  
+  dashboardPage: {
+  title: 'Tableau de bord',
+  loginRequired: 'Veuillez vous connecter d’abord.',
+  loginButton: 'Se connecter',
+  myPoints: 'Mes points',
+  globalRank: 'Classement global',
+  myTips: 'Mes pronostics',
+  openTips: 'Pronostics ouverts',
+  nextMatches: 'Prochains matchs',
+  topRanking: 'Top 5 du classement',
+  rank: '#',
+  player: 'Joueur',
+  points: 'Points',
+  noPoints: 'Aucun point pour le moment.',
+  fullRanking: 'Voir le classement complet'
 }
 };
