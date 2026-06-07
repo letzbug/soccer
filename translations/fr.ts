@@ -155,5 +155,9 @@ stadiumModal: {
   loadError: 'Les matchs n’ont pas pu être chargés.',
   saveError: 'Le résultat n’a pas pu être enregistré.',
   success: 'Résultat enregistré et points calculés.'
+},
+  stadiumCard: {
+  seats: 'places',
+  opened: 'Ouverture'
 }
 };
