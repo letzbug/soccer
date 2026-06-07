@@ -29,5 +29,19 @@ export const en = {
     finalScore: 'Final Score',
     centerDescription:
       'The next World Cup match, stadium information and future results.'
-  }
+  },
+  
+  auth: {
+  loginTitle: 'Login',
+  registerTitle: 'Create account',
+  email: 'Email',
+  password: 'Password',
+  loginButton: 'Login',
+  loginLoading: 'Logging in...',
+  googleButton: 'Continue with Google',
+  registerButton: 'Register',
+  registerLoading: 'Creating account...',
+  confirmEmail: 'Account created. Please confirm your email.',
+  passwordTooShort: 'Password must be at least 6 characters.'
+}
 };
