@@ -10,15 +10,18 @@ import {
   BarChart3,
   ClipboardList,
   LogIn,
-  LogOut
+  LogOut,
+  User
 } from 'lucide-react';
 import { createClient } from '@/lib/supabase-browser';
 
 const items = [
+  const items = [
   ['/dashboard', 'Dashboard', Trophy],
   ['/spielplan', 'Spielplan', CalendarDays],
   ['/stadien', 'Stadien', Landmark],
   ['/meine-tipps', 'Meine Tipps', ClipboardList],
+  ['/profil', 'Profil', User],
   ['/leaderboard', 'Ranking', BarChart3]
 ] as const;
 
