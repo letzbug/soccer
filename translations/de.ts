@@ -31,5 +31,19 @@ export const de = {
     finalScore: 'Final Score',
     centerDescription:
       'Das nächste WM-Spiel, Stadion-Infos und später eingetragene Ergebnisse.'
-  }
+  },
+  
+  auth: {
+  loginTitle: 'Login',
+  registerTitle: 'Account erstellen',
+  email: 'Email',
+  password: 'Passwort',
+  loginButton: 'Einloggen',
+  loginLoading: 'Einloggen...',
+  googleButton: 'Mit Google weiter',
+  registerButton: 'Registrieren',
+  registerLoading: 'Erstelle Account...',
+  confirmEmail: 'Account erstellt. Bitte bestätige deine E-Mail.',
+  passwordTooShort: 'Das Passwort muss mindestens 6 Zeichen haben.'
+}
 };
