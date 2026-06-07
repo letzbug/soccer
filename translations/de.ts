@@ -98,5 +98,14 @@ export const de = {
   points: 'Punkte',
   tips: 'Tipps',
   empty: 'Noch keine Punkte vorhanden.'
+},
+  
+  myTipsPage: {
+  title: 'Meine Tipps',
+  loginRequired: 'Bitte zuerst einloggen.',
+  match: 'Spiel',
+  myTip: 'Mein Tipp',
+  points: 'Punkte',
+  empty: 'Du hast noch keine Tipps abgegeben.'
 }
 };
