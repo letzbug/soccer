@@ -113,5 +113,21 @@ export const de = {
   title: 'Spielplan',
   searchPlaceholder: 'Suche Team, Runde, Gruppe...',
   all: 'Alle'
+},
+  
+  matchCard: {
+  group: 'Gruppe',
+  closed: 'Tippabgabe geschlossen',
+  tipClosed: 'Tippen geschlossen',
+  tip: 'Tippen',
+  stadium: 'Stadion ansehen'
+},
+
+tipModal: {
+  title: 'Dein Tipp',
+  cancel: 'Abbrechen',
+  save: 'Tipp speichern',
+  loginRequired: 'Bitte zuerst einloggen.',
+  saveError: 'Tipp konnte nicht gespeichert werden.'
 }
 };
