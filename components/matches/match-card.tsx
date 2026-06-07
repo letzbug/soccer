@@ -1,13 +1,22 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { Match } from '@/data/matches';
 import { stadiumById } from '@/data/stadiums';
 import { TipModal } from './tip-modal';
 import { StadiumModal } from '@/components/stadiums/stadium-modal';
 import { Button } from '@/components/ui/button';
 import { useTipStore } from '@/store/tip-store';
+import {
+  getStoredLanguage,
+  getTranslations,
+  type Language
+} from '@/lib/i18n';
 
 export function MatchCard({ match }: { match: Match }) {
+  const [language, setLanguage] = useState<Language>('de');
+  const t = getTranslations(language).matchCard;
+
   const stadium = stadiumById(match.stadiumId);
   const tip = useTipStore((s) => s.draft[match.id]);
 
@@ -15,12 +24,30 @@ export function MatchCard({ match }: { match: Match }) {
   const now = new Date();
   const isClosed = now >= matchDate || match.status !== 'scheduled';
 
+  useEffect(() => {
+    setLanguage(getStoredLanguage());
+
+    function handleLanguageChange(event: Event) {
+      const customEvent = event as CustomEvent<Language>;
+      setLanguage(customEvent.detail);
+    }
+
+    window.addEventListener('globetip-language-change', handleLanguageChange);
+
+    return () => {
+      window.removeEventListener(
+        'globetip-language-change',
+        handleLanguageChange
+      );
+    };
+  }, []);
+
   return (
     <article className="glass card-hover rounded-3xl p-5">
       <div className="flex items-center justify-between gap-3">
         <span className="rounded-full bg-emeraldx/15 px-3 py-1 text-xs font-bold text-emeraldx">
           {match.stage}
-          {match.group ? ` · Gruppe ${match.group}` : ''}
+          {match.group ? ` · ${t.group} ${match.group}` : ''}
         </span>
 
         <time className="text-xs text-white/55">
@@ -49,23 +76,21 @@ export function MatchCard({ match }: { match: Match }) {
 
       {isClosed && (
         <div className="mt-4 rounded-2xl border border-red-500/20 bg-red-500/10 p-3 text-center text-sm text-red-200">
-          Tippabgabe geschlossen
+          {t.closed}
         </div>
       )}
 
       <div className="mt-5 flex flex-wrap gap-2">
         {isClosed ? (
-          <Button disabled>
-            Tippen geschlossen
-          </Button>
+          <Button disabled>{t.tipClosed}</Button>
         ) : (
           <TipModal match={match}>
-            <Button>Tippen</Button>
+            <Button>{t.tip}</Button>
           </TipModal>
         )}
 
         <StadiumModal stadium={stadium}>
-          <Button variant="ghost">Stadion ansehen</Button>
+          <Button variant="ghost">{t.stadium}</Button>
         </StadiumModal>
       </div>
     </article>
