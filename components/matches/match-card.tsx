@@ -25,13 +25,9 @@ export function MatchCard({ match }: { match: Match }) {
   const isClosed = now >= matchDate || match.status !== 'scheduled';
   const translatedStage =
   language === 'fr'
-    ? match.stage
-        .replace('Gruppenphase', 'Phase de groupes')
-        .replace('Finale', 'Finale')
+    ? 'Phase de groupes'
     : language === 'en'
-      ? match.stage
-          .replace('Gruppenphase', 'Group stage')
-          .replace('Finale', 'Final')
+      ? 'Group Stage'
       : match.stage;
 
   useEffect(() => {
