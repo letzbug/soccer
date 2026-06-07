@@ -137,5 +137,10 @@ stadiumModal: {
   fifaName: 'Nom FIFA',
   opened: 'Année d’ouverture',
   capacity: 'Capacité'
+},
+  
+  stadiumsPage: {
+  title: 'Stades',
+  description: 'Cliquez sur un stade pour afficher les détails, la photo, la capacité et les faits intéressants.'
 }
 };
