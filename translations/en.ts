@@ -110,5 +110,21 @@ export const en = {
   title: 'Schedule',
   searchPlaceholder: 'Search team, round, group...',
   all: 'All'
+},
+  
+  matchCard: {
+  group: 'Group',
+  closed: 'Tip submission closed',
+  tipClosed: 'Tips closed',
+  tip: 'Tip',
+  stadium: 'View stadium'
+},
+
+tipModal: {
+  title: 'Your Tip',
+  cancel: 'Cancel',
+  save: 'Save Tip',
+  loginRequired: 'Please log in first.',
+  saveError: 'Tip could not be saved.'
 }
 };
