@@ -128,11 +128,7 @@ tipModal: {
   saveError: 'Tip could not be saved.'
 },
   
-  stadiumsPage: {
-  title: 'Stadiums'
-},
-
-stadiumModal: {
+  stadiumModal: {
   fifaName: 'FIFA name',
   opened: 'Opened',
   capacity: 'Capacity'
