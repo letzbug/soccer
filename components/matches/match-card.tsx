@@ -1,2 +1,73 @@
-'use client'; import { Match } from '@/data/matches'; import { stadiumById } from '@/data/stadiums'; import { TipModal } from './tip-modal'; import { StadiumModal } from '@/components/stadiums/stadium-modal'; import { Button } from '@/components/ui/button'; import { useTipStore } from '@/store/tip-store';
-export function MatchCard({match}:{match:Match}){const stadium=stadiumById(match.stadiumId); const tip=useTipStore(s=>s.draft[match.id]); return <article className="glass card-hover rounded-3xl p-5"><div className="flex items-center justify-between gap-3"><span className="rounded-full bg-emeraldx/15 px-3 py-1 text-xs font-bold text-emeraldx">{match.stage}{match.group?` · Gruppe ${match.group}`:''}</span><time className="text-xs text-white/55">{new Date(match.date).toLocaleString('de-DE',{dateStyle:'medium',timeStyle:'short'})}</time></div><div className="mt-5 grid grid-cols-[1fr_auto_1fr] items-center gap-2 text-center"><div className="text-4xl">{match.homeFlag}<p className="mt-2 text-base font-bold">{match.home}</p></div><div className="rounded-2xl bg-black/30 px-4 py-2 text-xl font-black text-goldx">{tip?`${tip.home}:${tip.away}`:'VS'}</div><div className="text-4xl">{match.awayFlag}<p className="mt-2 text-base font-bold">{match.away}</p></div></div><div className="mt-5 flex flex-wrap gap-2"><TipModal match={match}><Button>Tippen</Button></TipModal><StadiumModal stadium={stadium}><Button variant="ghost">Stadion ansehen</Button></StadiumModal></div></article>}
+'use client';
+
+import { Match } from '@/data/matches';
+import { stadiumById } from '@/data/stadiums';
+import { TipModal } from './tip-modal';
+import { StadiumModal } from '@/components/stadiums/stadium-modal';
+import { Button } from '@/components/ui/button';
+import { useTipStore } from '@/store/tip-store';
+
+export function MatchCard({ match }: { match: Match }) {
+  const stadium = stadiumById(match.stadiumId);
+  const tip = useTipStore((s) => s.draft[match.id]);
+
+  const matchDate = new Date(match.date);
+  const now = new Date();
+  const isClosed = now >= matchDate || match.status !== 'scheduled';
+
+  return (
+    <article className="glass card-hover rounded-3xl p-5">
+      <div className="flex items-center justify-between gap-3">
+        <span className="rounded-full bg-emeraldx/15 px-3 py-1 text-xs font-bold text-emeraldx">
+          {match.stage}
+          {match.group ? ` · Gruppe ${match.group}` : ''}
+        </span>
+
+        <time className="text-xs text-white/55">
+          {matchDate.toLocaleString('de-DE', {
+            dateStyle: 'medium',
+            timeStyle: 'short'
+          })}
+        </time>
+      </div>
+
+      <div className="mt-5 grid grid-cols-[1fr_auto_1fr] items-center gap-2 text-center">
+        <div className="text-4xl">
+          {match.homeFlag}
+          <p className="mt-2 text-base font-bold">{match.home}</p>
+        </div>
+
+        <div className="rounded-2xl bg-black/30 px-4 py-2 text-xl font-black text-goldx">
+          {tip ? `${tip.home}:${tip.away}` : 'VS'}
+        </div>
+
+        <div className="text-4xl">
+          {match.awayFlag}
+          <p className="mt-2 text-base font-bold">{match.away}</p>
+        </div>
+      </div>
+
+      {isClosed && (
+        <div className="mt-4 rounded-2xl border border-red-500/20 bg-red-500/10 p-3 text-center text-sm text-red-200">
+          Tippabgabe geschlossen
+        </div>
+      )}
+
+      <div className="mt-5 flex flex-wrap gap-2">
+        {isClosed ? (
+          <Button disabled>
+            Tippen geschlossen
+          </Button>
+        ) : (
+          <TipModal match={match}>
+            <Button>Tippen</Button>
+          </TipModal>
+        )}
+
+        <StadiumModal stadium={stadium}>
+          <Button variant="ghost">Stadion ansehen</Button>
+        </StadiumModal>
+      </div>
+    </article>
+  );
+}
