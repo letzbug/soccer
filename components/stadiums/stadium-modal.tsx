@@ -2,8 +2,14 @@
 
 import * as Dialog from '@radix-ui/react-dialog';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import { Stadium } from '@/data/stadiums';
 import { X, Users, Calendar } from 'lucide-react';
+import {
+  getStoredLanguage,
+  getTranslations,
+  type Language
+} from '@/lib/i18n';
 
 export function StadiumModal({
   stadium,
@@ -12,6 +18,27 @@ export function StadiumModal({
   stadium: Stadium;
   children: React.ReactNode;
 }) {
+  const [language, setLanguage] = useState<Language>('de');
+  const t = getTranslations(language).stadiumModal;
+
+  useEffect(() => {
+    setLanguage(getStoredLanguage());
+
+    function handleLanguageChange(event: Event) {
+      const customEvent = event as CustomEvent<Language>;
+      setLanguage(customEvent.detail);
+    }
+
+    window.addEventListener('globetip-language-change', handleLanguageChange);
+
+    return () => {
+      window.removeEventListener(
+        'globetip-language-change',
+        handleLanguageChange
+      );
+    };
+  }, []);
+
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>{children}</Dialog.Trigger>
@@ -44,7 +71,7 @@ export function StadiumModal({
               </Dialog.Title>
 
               <p className="text-goldx">
-                FIFA-Name: {stadium.tournamentName}
+                {t.fifaName}: {stadium.tournamentName}
               </p>
             </div>
 
@@ -55,12 +82,13 @@ export function StadiumModal({
             <div className="grid gap-3 sm:grid-cols-2">
               <div className="glass rounded-2xl p-4">
                 <Calendar className="text-emeraldx" />
-                Baujahr <b>{stadium.opened}</b>
+                {t.opened} <b>{stadium.opened}</b>
               </div>
 
               <div className="glass rounded-2xl p-4">
                 <Users className="text-goldx" />
-                Kapazität <b>{stadium.capacity.toLocaleString('de-DE')}</b>
+                {t.capacity}{' '}
+                <b>{stadium.capacity.toLocaleString('de-DE')}</b>
               </div>
             </div>
 
