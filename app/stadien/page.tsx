@@ -38,8 +38,8 @@ export default function Stadien() {
       </h1>
 
       <p className="mt-2 text-white/60">
-        Click a stadium to view details, photos, capacity and facts.
-      </p>
+  {t.description}
+</p>
 
       <div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
         {stadiums.map((s) => (
