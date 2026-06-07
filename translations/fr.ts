@@ -30,5 +30,19 @@ export const fr = {
     finalScore: 'Score final',
     centerDescription:
       'Le prochain match de la Coupe du Monde, les informations du stade et les résultats.'
-  }
+  },
+  
+  auth: {
+  loginTitle: 'Connexion',
+  registerTitle: 'Créer un compte',
+  email: 'Email',
+  password: 'Mot de passe',
+  loginButton: 'Se connecter',
+  loginLoading: 'Connexion...',
+  googleButton: 'Continuer avec Google',
+  registerButton: "S'inscrire",
+  registerLoading: 'Création du compte...',
+  confirmEmail: 'Compte créé. Veuillez confirmer votre e-mail.',
+  passwordTooShort: 'Le mot de passe doit contenir au moins 6 caractères.'
+}
 };
