@@ -1,10 +1,15 @@
 'use client';
 
 import * as Dialog from '@radix-ui/react-dialog';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Match } from '@/data/matches';
 import { Button } from '@/components/ui/button';
 import { useTipStore } from '@/store/tip-store';
+import {
+  getStoredLanguage,
+  getTranslations,
+  type Language
+} from '@/lib/i18n';
 
 export function TipModal({
   match,
@@ -15,8 +20,29 @@ export function TipModal({
 }) {
   const setTip = useTipStore((s) => s.setTip);
 
+  const [language, setLanguage] = useState<Language>('de');
+  const t = getTranslations(language).tipModal;
+
   const [home, setHome] = useState('');
   const [away, setAway] = useState('');
+
+  useEffect(() => {
+    setLanguage(getStoredLanguage());
+
+    function handleLanguageChange(event: Event) {
+      const customEvent = event as CustomEvent<Language>;
+      setLanguage(customEvent.detail);
+    }
+
+    window.addEventListener('globetip-language-change', handleLanguageChange);
+
+    return () => {
+      window.removeEventListener(
+        'globetip-language-change',
+        handleLanguageChange
+      );
+    };
+  }, []);
 
   const cleanNumber = (value: string) => {
     return value.replace(/\D/g, '').slice(0, 2);
@@ -31,7 +57,7 @@ export function TipModal({
 
         <Dialog.Content className="glass fixed left-1/2 top-1/2 z-50 w-[92vw] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-3xl p-6 shadow-glow">
           <Dialog.Title className="gold-text text-center text-3xl font-black">
-            Dein Tipp
+            {t.title}
           </Dialog.Title>
 
           <div className="mt-6 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
@@ -76,7 +102,7 @@ export function TipModal({
 
           <div className="mt-8 flex justify-end gap-3">
             <Dialog.Close asChild>
-              <Button variant="ghost">Abbrechen</Button>
+              <Button variant="ghost">{t.cancel}</Button>
             </Dialog.Close>
 
             <Dialog.Close asChild>
@@ -89,7 +115,7 @@ export function TipModal({
                   )
                 }
               >
-                Tipp speichern
+                {t.save}
               </Button>
             </Dialog.Close>
           </div>
