@@ -60,5 +60,30 @@ export const en = {
   points: 'Points',
   noPoints: 'No points yet.',
   fullRanking: 'View full ranking'
+},
+  profilePage: {
+  title: 'Profile',
+  description: 'Your GlobeTip statistics and current position in the game.',
+  loginRequired: 'Please log in first.',
+  loginButton: 'Go to login',
+  account: 'Account',
+  memberSince: 'Member since',
+  ranking: 'Ranking',
+  currentPosition: 'Current leaderboard position',
+  username: 'Username',
+  usernameDescription: 'This name appears in the ranking and on your profile.',
+  usernamePlaceholder: 'e.g. Frank G',
+  save: 'Save',
+  saving: 'Saving...',
+  usernameSaved: 'Username saved.',
+  usernameTooShort: 'Username must be at least 3 characters.',
+  usernameTooLong: 'Username must be 24 characters or fewer.',
+  usernameTaken: 'This username is already taken.',
+  usernameError: 'Username could not be saved.',
+  points: 'Points',
+  submittedTips: 'Submitted tips',
+  perfectScore: 'Points for exact score',
+  viewMyTips: 'View my tips',
+  openLeaderboard: 'Open leaderboard'
 }
 };
