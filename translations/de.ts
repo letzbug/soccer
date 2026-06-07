@@ -88,5 +88,15 @@ export const de = {
   perfectScore: 'Punkte bei Volltreffer',
   viewMyTips: 'Meine Tipps ansehen',
   openLeaderboard: 'Leaderboard öffnen'
+},
+  
+  leaderboardPage: {
+  title: 'Leaderboard',
+  loadError: 'Leaderboard konnte nicht geladen werden.',
+  rank: 'Rang',
+  player: 'Spieler',
+  points: 'Punkte',
+  tips: 'Tipps',
+  empty: 'Noch keine Punkte vorhanden.'
 }
 };
