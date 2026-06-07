@@ -16,7 +16,6 @@ import {
 import { createClient } from '@/lib/supabase-browser';
 
 const items = [
-  const items = [
   ['/dashboard', 'Dashboard', Trophy],
   ['/spielplan', 'Spielplan', CalendarDays],
   ['/stadien', 'Stadien', Landmark],
@@ -46,7 +45,6 @@ export function Nav() {
   return (
     <nav className="sticky top-0 z-40 border-b border-white/10 bg-pitch/75 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3">
-
         <Link href="/" className="flex shrink-0 items-center gap-3">
           <Image
             src="/icons/icon-192.png"
