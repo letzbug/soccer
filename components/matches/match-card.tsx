@@ -23,6 +23,16 @@ export function MatchCard({ match }: { match: Match }) {
   const matchDate = new Date(match.date);
   const now = new Date();
   const isClosed = now >= matchDate || match.status !== 'scheduled';
+  const translatedStage =
+  language === 'fr'
+    ? match.stage
+        .replace('Gruppenphase', 'Phase de groupes')
+        .replace('Finale', 'Finale')
+    : language === 'en'
+      ? match.stage
+          .replace('Gruppenphase', 'Group stage')
+          .replace('Finale', 'Final')
+      : match.stage;
 
   useEffect(() => {
     setLanguage(getStoredLanguage());
@@ -46,7 +56,7 @@ export function MatchCard({ match }: { match: Match }) {
     <article className="glass card-hover rounded-3xl p-5">
       <div className="flex items-center justify-between gap-3">
         <span className="rounded-full bg-emeraldx/15 px-3 py-1 text-xs font-bold text-emeraldx">
-          {match.stage}
+          {translatedStage}
           {match.group ? ` · ${t.group} ${match.group}` : ''}
         </span>
 
