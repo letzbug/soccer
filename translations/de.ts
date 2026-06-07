@@ -107,5 +107,11 @@ export const de = {
   myTip: 'Mein Tipp',
   points: 'Punkte',
   empty: 'Du hast noch keine Tipps abgegeben.'
+},
+  
+  schedulePage: {
+  title: 'Spielplan',
+  searchPlaceholder: 'Suche Team, Runde, Gruppe...',
+  all: 'Alle'
 }
 };
