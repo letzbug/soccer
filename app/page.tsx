@@ -15,8 +15,19 @@ export default function Home() {
   const [language, setLanguage] = useState<Language>('de');
 
   useEffect(() => {
-    setLanguage(getStoredLanguage());
-  }, []);
+  setLanguage(getStoredLanguage());
+
+  function handleLanguageChange(event: Event) {
+    const customEvent = event as CustomEvent<Language>;
+    setLanguage(customEvent.detail);
+  }
+
+  window.addEventListener('globetip-language-change', handleLanguageChange);
+
+  return () => {
+    window.removeEventListener('globetip-language-change', handleLanguageChange);
+  };
+}, []);
 
   const t = getTranslations(language).home;
 
