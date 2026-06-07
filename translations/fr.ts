@@ -96,5 +96,14 @@ export const fr = {
   points: 'Points',
   tips: 'Pronostics',
   empty: 'Aucun point pour le moment.'
+},
+  
+  myTipsPage: {
+  title: 'Mes pronostics',
+  loginRequired: 'Veuillez vous connecter d’abord.',
+  match: 'Match',
+  myTip: 'Mon pronostic',
+  points: 'Points',
+  empty: 'Vous n’avez pas encore envoyé de pronostic.'
 }
 };
