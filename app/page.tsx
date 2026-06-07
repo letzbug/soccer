@@ -1,9 +1,25 @@
+'use client';
+
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { Trophy, Sparkles, Activity, Newspaper } from 'lucide-react';
 import { matches } from '@/data/matches';
 import { stadiumById } from '@/data/stadiums';
+import {
+  getStoredLanguage,
+  getTranslations,
+  type Language
+} from '@/lib/i18n';
 
 export default function Home() {
+  const [language, setLanguage] = useState<Language>('de');
+
+  useEffect(() => {
+    setLanguage(getStoredLanguage());
+  }, []);
+
+  const t = getTranslations(language).home;
+
   const featuredMatch = matches[0];
   const stadium = stadiumById(featuredMatch.stadiumId);
   const hasResult = featuredMatch.score && featuredMatch.score.length === 2;
@@ -13,30 +29,30 @@ export default function Home() {
       <section>
         <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-emeraldx/30 bg-emeraldx/10 px-4 py-2 text-sm text-emeraldx">
           <Sparkles size={16} />
-          Premium WM 2026 Tipp-Spiel
+          {t.badge}
         </div>
 
         <h1 className="gold-text text-5xl font-black tracking-tight sm:text-7xl">
-          GlobeTip 2026
+          {t.title}
         </h1>
 
         <p className="mt-6 max-w-xl text-lg text-white/70">
-          Tippe alle Spiele, sammle Punkte, fordere Freunde heraus und verfolge Ergebnisse, News und jedes WM-Stadion in einer modernen Fußball-App.
+          {t.description}
         </p>
 
         <div className="mt-8 flex flex-wrap gap-3">
           <Link className="btn-primary" href="/auth/register">
-            Jetzt starten
+            {t.start}
           </Link>
           <Link className="btn-ghost" href="/dashboard">
-            Dashboard ansehen
+            {t.dashboard}
           </Link>
         </div>
 
         <div className="mt-10 grid gap-3 sm:grid-cols-3">
-          <Feature icon={<Trophy />} title="104 WM-Spiele" href="/spielplan" />
-          <Feature icon={<Activity />} title="Ergebnisse" href="/live" />
-          <Feature icon={<Newspaper />} title="Latest News" href="/news" />
+          <Feature icon={<Trophy />} title={t.matches} href="/spielplan" />
+          <Feature icon={<Activity />} title={t.results} href="/live" />
+          <Feature icon={<Newspaper />} title={t.news} href="/news" />
         </div>
       </section>
 
@@ -47,16 +63,16 @@ export default function Home() {
           <div className="loader-ball mx-auto" />
 
           <h2 className="mt-6 text-center text-3xl font-black">
-            Match Center
+            {t.matchCenter}
           </h2>
 
           <p className="mt-3 text-center text-white/60">
-            Das nächste WM-Spiel, Stadion-Infos und später eingetragene Ergebnisse.
+            {t.centerDescription}
           </p>
 
           <div className="mt-8 rounded-3xl bg-gradient-to-br from-emeraldx/20 to-goldx/10 p-5">
             <div className="mb-4 flex items-center justify-between text-xs uppercase tracking-[0.25em] text-white/50">
-              <span>{hasResult ? 'Final Score' : 'Nächstes Spiel'}</span>
+              <span>{hasResult ? t.finalScore : t.nextMatch}</span>
               <span className="text-emeraldx">
                 {new Date(featuredMatch.date).toLocaleDateString('de-DE')}
               </span>
@@ -65,7 +81,9 @@ export default function Home() {
             <div className="grid grid-cols-3 items-center text-center">
               <span className="text-5xl">{featuredMatch.homeFlag}</span>
               <span className="text-2xl font-black text-goldx">
-                {hasResult ? `${featuredMatch.score?.[0]} : ${featuredMatch.score?.[1]}` : 'VS'}
+                {hasResult
+                  ? `${featuredMatch.score?.[0]} : ${featuredMatch.score?.[1]}`
+                  : 'VS'}
               </span>
               <span className="text-5xl">{featuredMatch.awayFlag}</span>
             </div>
