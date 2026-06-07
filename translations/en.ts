@@ -126,5 +126,15 @@ tipModal: {
   save: 'Save Tip',
   loginRequired: 'Please log in first.',
   saveError: 'Tip could not be saved.'
+},
+  
+  stadiumsPage: {
+  title: 'Stadiums'
+},
+
+stadiumModal: {
+  fifaName: 'FIFA name',
+  opened: 'Opened',
+  capacity: 'Capacity'
 }
 };
