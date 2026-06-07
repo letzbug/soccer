@@ -85,5 +85,15 @@ export const en = {
   perfectScore: 'Points for exact score',
   viewMyTips: 'View my tips',
   openLeaderboard: 'Open leaderboard'
+},
+  
+  leaderboardPage: {
+  title: 'Leaderboard',
+  loadError: 'Leaderboard could not be loaded.',
+  rank: 'Rank',
+  player: 'Player',
+  points: 'Points',
+  tips: 'Tips',
+  empty: 'No points yet.'
 }
 };
