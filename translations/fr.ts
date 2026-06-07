@@ -142,5 +142,18 @@ stadiumModal: {
   stadiumsPage: {
   title: 'Stades',
   description: 'Cliquez sur un stade pour afficher les détails, la photo, la capacité et les faits intéressants.'
+},
+  adminPage: {
+  title: 'Admin',
+  description: 'Saisir les résultats et calculer automatiquement les points.',
+  checking: 'Vérification des droits administrateur...',
+  noAccess: 'Accès refusé',
+  noAccessText: 'Cette zone est réservée à l’administrateur.',
+  status: 'Statut',
+  save: 'Enregistrer',
+  enterBoth: 'Veuillez saisir les deux scores.',
+  loadError: 'Les matchs n’ont pas pu être chargés.',
+  saveError: 'Le résultat n’a pas pu être enregistré.',
+  success: 'Résultat enregistré et points calculés.'
 }
 };
