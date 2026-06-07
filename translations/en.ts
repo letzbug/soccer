@@ -136,5 +136,10 @@ stadiumModal: {
   fifaName: 'FIFA name',
   opened: 'Opened',
   capacity: 'Capacity'
+},
+  
+  stadiumsPage: {
+  title: 'Stadiums',
+  description: 'Click a stadium to view details, photo, capacity and facts.'
 }
 };
