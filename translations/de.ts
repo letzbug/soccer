@@ -63,5 +63,30 @@ export const de = {
   points: 'Punkte',
   noPoints: 'Noch keine Punkte vorhanden.',
   fullRanking: 'Komplettes Ranking ansehen'
+},
+  profilePage: {
+  title: 'Profil',
+  description: 'Deine GlobeTip-Statistik und dein aktueller Stand im Tippspiel.',
+  loginRequired: 'Bitte zuerst einloggen.',
+  loginButton: 'Zum Login',
+  account: 'Account',
+  memberSince: 'Mitglied seit',
+  ranking: 'Ranking',
+  currentPosition: 'Aktuelle Position im Leaderboard',
+  username: 'Benutzername',
+  usernameDescription: 'Dieser Name erscheint im Ranking und auf deinem Profil.',
+  usernamePlaceholder: 'z. B. Frank G',
+  save: 'Speichern',
+  saving: 'Speichern...',
+  usernameSaved: 'Benutzername gespeichert.',
+  usernameTooShort: 'Der Benutzername muss mindestens 3 Zeichen haben.',
+  usernameTooLong: 'Der Benutzername darf maximal 24 Zeichen haben.',
+  usernameTaken: 'Dieser Benutzername ist bereits vergeben.',
+  usernameError: 'Benutzername konnte nicht gespeichert werden.',
+  points: 'Punkte',
+  submittedTips: 'Abgegebene Tipps',
+  perfectScore: 'Punkte bei Volltreffer',
+  viewMyTips: 'Meine Tipps ansehen',
+  openLeaderboard: 'Leaderboard öffnen'
 }
 };
