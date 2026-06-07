@@ -24,7 +24,14 @@ export function getStoredLanguage(): Language {
 
 export function setStoredLanguage(language: Language) {
   if (typeof window === 'undefined') return;
+
   window.localStorage.setItem('globetip-language', language);
+
+  window.dispatchEvent(
+    new CustomEvent('globetip-language-change', {
+      detail: language
+    })
+  );
 }
 
 export function getTranslations(language: Language) {
