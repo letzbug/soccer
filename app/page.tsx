@@ -1,12 +1,13 @@
 import Link from 'next/link';
-import {
-  Trophy,
-  Sparkles,
-  Activity,
-  Newspaper
-} from 'lucide-react';
+import { Trophy, Sparkles, Activity, Newspaper } from 'lucide-react';
+import { matches } from '@/data/matches';
+import { stadiumById } from '@/data/stadiums';
 
 export default function Home() {
+  const featuredMatch = matches[0];
+  const stadium = stadiumById(featuredMatch.stadiumId);
+  const hasResult = featuredMatch.score && featuredMatch.score.length === 2;
+
   return (
     <main className="mx-auto grid min-h-[calc(100vh-64px)] max-w-7xl items-center gap-10 px-4 py-14 lg:grid-cols-2">
       <section>
@@ -20,7 +21,7 @@ export default function Home() {
         </h1>
 
         <p className="mt-6 max-w-xl text-lg text-white/70">
-          Tippe alle Spiele, sammle Punkte, fordere Freunde heraus und verfolge Live-Scores, News und jedes WM-Stadion in einer modernen Fußball-App.
+          Tippe alle Spiele, sammle Punkte, fordere Freunde heraus und verfolge Ergebnisse, News und jedes WM-Stadion in einer modernen Fußball-App.
         </p>
 
         <div className="mt-8 flex flex-wrap gap-3">
@@ -28,13 +29,13 @@ export default function Home() {
             Jetzt starten
           </Link>
           <Link className="btn-ghost" href="/dashboard">
-            Demo ansehen
+            Dashboard ansehen
           </Link>
         </div>
 
         <div className="mt-10 grid gap-3 sm:grid-cols-3">
-          <Feature icon={<Trophy />} title="104 Spiele" href="/spielplan" />
-          <Feature icon={<Activity />} title="Live Scores" href="/live" />
+          <Feature icon={<Trophy />} title="104 WM-Spiele" href="/spielplan" />
+          <Feature icon={<Activity />} title="Ergebnisse" href="/live" />
           <Feature icon={<Newspaper />} title="Latest News" href="/news" />
         </div>
       </section>
@@ -46,27 +47,39 @@ export default function Home() {
           <div className="loader-ball mx-auto" />
 
           <h2 className="mt-6 text-center text-3xl font-black">
-            Live Match Center
+            Match Center
           </h2>
 
           <p className="mt-3 text-center text-white/60">
-            Live-Spielstände, aktuelle Ergebnisse, WM-News und Stadion-Infos an einem Ort.
+            Das nächste WM-Spiel, Stadion-Infos und später eingetragene Ergebnisse.
           </p>
 
           <div className="mt-8 rounded-3xl bg-gradient-to-br from-emeraldx/20 to-goldx/10 p-5">
             <div className="mb-4 flex items-center justify-between text-xs uppercase tracking-[0.25em] text-white/50">
-              <span>Live Score</span>
-              <span className="text-emeraldx">Aktualisiert alle 10 Min.</span>
+              <span>{hasResult ? 'Final Score' : 'Nächstes Spiel'}</span>
+              <span className="text-emeraldx">
+                {new Date(featuredMatch.date).toLocaleDateString('de-DE')}
+              </span>
             </div>
 
             <div className="grid grid-cols-3 items-center text-center">
-              <span className="text-5xl">🇲🇽</span>
-              <span className="text-2xl font-black text-goldx">2 : 1</span>
-              <span className="text-5xl">🇿🇦</span>
+              <span className="text-5xl">{featuredMatch.homeFlag}</span>
+              <span className="text-2xl font-black text-goldx">
+                {hasResult ? `${featuredMatch.score?.[0]} : ${featuredMatch.score?.[1]}` : 'VS'}
+              </span>
+              <span className="text-5xl">{featuredMatch.awayFlag}</span>
             </div>
 
-            <div className="mt-4 text-center text-sm text-white/60">
-              Mexiko vs Südafrika · Beispielanzeige
+            <div className="mt-4 text-center text-sm text-white/70">
+              {featuredMatch.home} vs {featuredMatch.away}
+            </div>
+
+            <div className="mt-2 text-center text-xs text-white/45">
+              {new Date(featuredMatch.date).toLocaleString('de-DE', {
+                dateStyle: 'medium',
+                timeStyle: 'short'
+              })}{' '}
+              · {stadium.name}
             </div>
           </div>
         </div>
@@ -89,9 +102,7 @@ function Feature({
       href={href}
       className="glass rounded-2xl p-4 text-center text-sm font-bold text-white/80 transition hover:scale-[1.03] hover:bg-white/10"
     >
-      <div className="mx-auto mb-2 w-fit text-goldx">
-        {icon}
-      </div>
+      <div className="mx-auto mb-2 w-fit text-goldx">{icon}</div>
       {title}
     </Link>
   );
